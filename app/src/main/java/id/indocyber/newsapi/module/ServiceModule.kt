@@ -7,6 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.indocyber.api_service.RetrofitClient
+import id.indocyber.api_service.service.GetEverythingService
 import id.indocyber.api_service.service.GetSourcesService
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -23,4 +24,9 @@ class ServiceModule {
     @Singleton
     fun provideGetSourcesService(retrofit: Retrofit) =
         retrofit.create(GetSourcesService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideGetEverythingService(retrofit: Retrofit) =
+        retrofit.create(GetEverythingService::class.java)
 }

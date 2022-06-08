@@ -3,6 +3,7 @@ package id.indocyber.newsapi.fragment.sources
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.indocyber.common.AppResponse
 import id.indocyber.common.base_class.BaseFragment
@@ -26,8 +27,18 @@ class SourcesFragment : BaseFragment<SourcesViewModel, FragmentSourcesBinding>()
         binding.textInputSearch.addTextChangedListener {
             vm.searchText.value = it.toString()
         }
+        binding.fabNext.setOnClickListener {
+            val toArticlesFragment =
+                SourcesFragmentDirections.actionSourcesFragmentToArticlesFragment(
+                    selectedSources = vm.selectedSourceIds.joinToString(",")
+                )
+            it.findNavController().navigate(toArticlesFragment)
+        }
         val selectedCategory = SourcesFragmentArgs.fromBundle(arguments as Bundle).selectedCategory
         if (vm.getSourcesState.value == null) {
+            vm.getSources(selectedCategory)
+        }
+        binding.btnRetry.setOnClickListener {
             vm.getSources(selectedCategory)
         }
         setNextButtonVisibility()
