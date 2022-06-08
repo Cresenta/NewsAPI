@@ -5,7 +5,10 @@
       <map>
         <entry key="..\:/Programming/Bootcamp/Android Developer/Projects/NewsAPI/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
         <entry key="..\:/Programming/Bootcamp/Android Developer/Projects/NewsAPI/app/src/main/res/layout/category_item_layout.xml" value="0.184375" />
+        <entry key="..\:/Programming/Bootcamp/Android Developer/Projects/NewsAPI/app/src/main/res/layout/fragment_category.xml" value="0.21510416666666668" />
         <entry key="..\:/Programming/Bootcamp/Android Developer/Projects/NewsAPI/app/src/main/res/layout/fragment_home.xml" value="0.17135416666666667" />
+        <entry key="..\:/Programming/Bootcamp/Android Developer/Projects/NewsAPI/app/src/main/res/layout/fragment_sources.xml" value="0.25885416666666666" />
+        <entry key="..\:/Programming/Bootcamp/Android Developer/Projects/NewsAPI/app/src/main/res/layout/sources_item_layout.xml" value="0.2140625" />
       </map>
     </option>
   </component>

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="id.indocyber.newsapi">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".NewsApiApp"
         android:allowBackup="true"

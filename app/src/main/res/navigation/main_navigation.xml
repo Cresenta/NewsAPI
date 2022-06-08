@@ -3,11 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/categoryFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/categoryFragment"
         android:name="id.indocyber.newsapi.fragment.category.CategoryFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_category" />
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_sourcesFragment"
+            app:destination="@id/sourcesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sourcesFragment"
+        android:name="id.indocyber.newsapi.fragment.sources.SourcesFragment"
+        android:label="SourcesFragment" >
+        <argument
+            android:name="selectedCategory"
+            app:argType="string" />
+    </fragment>
 </navigation>

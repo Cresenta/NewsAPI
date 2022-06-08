@@ -8,15 +8,16 @@ class GetSourcesUseCase(
     private val getSourcesService: GetSourcesService
 ) {
     operator fun invoke(category: String) = flow {
+        emit(AppResponse.loading())
         val response = getSourcesService.getSources(
             category = category
         )
         if (response.isSuccessful) {
             response.body()?.let { data ->
-                this.emit(AppResponse.AppResponseSuccess(data))
-            } ?: this.emit(AppResponse.AppResponseError(null))
+                this.emit(AppResponse.success(data))
+            } ?: this.emit(AppResponse.error(null))
         } else {
-            this.emit(AppResponse.AppResponseError(null))
+            this.emit(AppResponse.error(null))
         }
     }
 }

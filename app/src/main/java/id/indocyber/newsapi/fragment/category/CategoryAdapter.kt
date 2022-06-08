@@ -1,9 +1,8 @@
 package id.indocyber.newsapi.fragment.category
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,14 +15,13 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.CategoryItemViewH
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: String) {
             binding.btnCategory.text = category
-//            binding.btnCategory.setOnClickListener {
-//                val intent = Intent(context, SourcesActivity::class.java)
-//                intent.putExtra(
-//                    SourcesActivity.Constants.EXTRA_SELECTED_CATEGORY,
-//                    category
-//                )
-//                context.startActivity(intent)
-//            }
+            binding.btnCategory.setOnClickListener {
+                val toSourcesFragment =
+                    CategoryFragmentDirections.actionCategoryFragmentToSourcesFragment(
+                        selectedCategory = category
+                    )
+                it.findNavController().navigate(toSourcesFragment)
+            }
         }
     }
 
@@ -56,7 +54,7 @@ class CategoryAdapter() : RecyclerView.Adapter<CategoryAdapter.CategoryItemViewH
             }
 
             override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-                return oldItem == newItem
+                return true
             }
         }
     }

@@ -19,6 +19,10 @@ class CategoryViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     val getCategoriesState = MutableLiveData<List<String>>()
 
+    init {
+        getCategories()
+    }
+
     fun getCategories() {
         CoroutineScope(Dispatchers.IO).launch {
             getCategoriesUseCase().collect {
