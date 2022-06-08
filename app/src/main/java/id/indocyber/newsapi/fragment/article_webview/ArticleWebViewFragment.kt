@@ -24,6 +24,4 @@ class ArticleWebViewFragment : Fragment() {
         binding.webArticle.loadUrl(articleUrl)
         return binding.root
     }
-
-
 }
