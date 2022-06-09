@@ -27,9 +27,7 @@ class SourcesViewModel @Inject constructor(
     fun getSources(category: String) {
         CoroutineScope(Dispatchers.IO).launch {
             getSourcesUseCase(category).collect {
-                runBlocking {
-                    getSourcesState.postValue(it)
-                }
+                getSourcesState.postValue(it)
             }
         }
     }

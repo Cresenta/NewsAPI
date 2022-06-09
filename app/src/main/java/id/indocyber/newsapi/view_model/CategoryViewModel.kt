@@ -23,12 +23,10 @@ class CategoryViewModel @Inject constructor(
         getCategories()
     }
 
-    fun getCategories() {
+    private fun getCategories() {
         CoroutineScope(Dispatchers.IO).launch {
             getCategoriesUseCase().collect {
-                runBlocking(Dispatchers.Main) {
-                    getCategoriesState.postValue(it)
-                }
+                getCategoriesState.postValue(it)
             }
         }
     }
