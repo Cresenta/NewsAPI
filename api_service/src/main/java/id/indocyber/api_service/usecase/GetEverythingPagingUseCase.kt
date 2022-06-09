@@ -9,7 +9,10 @@ class GetEverythingPagingUseCase(
     private val getEverythingService: GetEverythingService
 ) {
     operator fun invoke(sources: String, q: String) = Pager(
-        config = PagingConfig(25),
+        config = PagingConfig(
+            pageSize = 25,
+            initialLoadSize = 25
+        ),
         pagingSourceFactory = {
             GetEverythingDataSource(
                 getEverythingService,
