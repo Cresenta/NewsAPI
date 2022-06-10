@@ -1,8 +1,13 @@
 package id.indocyber.newsapi.fragment.articles
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
@@ -23,23 +28,11 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel, FragmentArticlesBinding
     override val layoutResourceId = R.layout.fragment_articles
     private val adapter = ArticlesPagingAdapter()
     private val loadStateAdapter = ArticlesPagingStateAdapter(::retry)
+    lateinit var selectedSourceIds: String
 
     override fun initBinding(binding: FragmentArticlesBinding) {
         binding.recycler.adapter = adapter.withLoadStateFooter(loadStateAdapter)
-        binding.textInputSearch.addTextChangedListener {
-            vm.searchText = it.toString()
-        }
-
-        val selectedSourceIds = ArticlesFragmentArgs.fromBundle(arguments as Bundle).selectedSources
-        binding.textInputSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                vm.getArticles(
-                    sources = selectedSourceIds,
-                    q = vm.searchText
-                )
-            }
-            false
-        }
+        selectedSourceIds = ArticlesFragmentArgs.fromBundle(arguments as Bundle).selectedSources
 
         adapter.addLoadStateListener {
             val list = adapter.snapshot()
@@ -84,7 +77,9 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel, FragmentArticlesBinding
             }
         }
 
-        vm.getArticles(selectedSourceIds)
+        if (vm.pagingData.value == null) {
+            vm.getArticles(selectedSourceIds)
+        }
         binding.btnRetry.setOnClickListener {
             vm.getArticles(selectedSourceIds)
         }
@@ -93,6 +88,44 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel, FragmentArticlesBinding
                 adapter.submitData(it)
             }
         }
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.option_menu, menu)
+
+        val searchMenuItem = menu.findItem(R.id.search)
+        val searchView = searchMenuItem.actionView as SearchView
+        searchView.queryHint = "Search articles"
+        if (vm.searchText.isNotEmpty()) {
+            searchMenuItem.expandActionView()
+            searchView.setQuery(vm.searchText, true)
+            searchView.clearFocus()
+        }
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            var timer: CountDownTimer? = null
+            val waitingTime = 2000L
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchView.clearFocus()
+                return true
+            }
+            override fun onQueryTextChange(newText: String): Boolean {
+                vm.searchText = newText
+                timer?.cancel()
+                timer = object : CountDownTimer(waitingTime, 500) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        Log.d("TIME", "seconds remaining: " + millisUntilFinished / 1000)
+                    }
+
+                    override fun onFinish() {
+                        vm.getArticles(selectedSourceIds, vm.searchText)
+                        Log.d("FINISHED", "DONE")
+                    }
+                }
+                (timer as CountDownTimer).start()
+                return false
+            }
+        })
     }
 
     private fun retry() = adapter.retry()

@@ -6,13 +6,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         tools:context=".fragment.sources.SourcesFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:padding="4dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             app:boxCornerRadiusTopStart="20dp"
             app:boxCornerRadiusBottomStart="20dp"
