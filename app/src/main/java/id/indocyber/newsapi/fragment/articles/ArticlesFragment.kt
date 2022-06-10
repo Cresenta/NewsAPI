@@ -96,6 +96,7 @@ class ArticlesFragment : BaseFragment<ArticlesViewModel, FragmentArticlesBinding
 
         val searchMenuItem = menu.findItem(R.id.search)
         val searchView = searchMenuItem.actionView as SearchView
+        searchView.maxWidth = R.style.max_width
         searchView.queryHint = "Search articles"
         if (vm.searchText.isNotEmpty()) {
             searchMenuItem.expandActionView()
