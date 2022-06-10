@@ -5,10 +5,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
 import dagger.hilt.android.AndroidEntryPoint
